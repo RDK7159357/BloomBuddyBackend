@@ -36,12 +36,20 @@ Required environment variables for production:
 
 ## Deployment
 
-This application is configured for deployment on Render.com:
+### Railway (Recommended)
 
-1. Connect your GitHub repository to Render
-2. Set environment variables in Render dashboard
-3. Use the build command: `pip install -r requirements.txt`
-4. Use the start command: `gunicorn --bind 0.0.0.0:$PORT ml-api-server:app`
+This application is optimized for deployment on Railway:
+
+1. **Deploy**: Go to [railway.app](https://railway.app), connect your GitHub repo
+2. **Environment**: Add `ANTHROPIC_API_KEY` in Railway dashboard
+3. **Deploy**: Railway automatically handles the rest!
+
+For detailed instructions, see [RAILWAY_DEPLOY.md](RAILWAY_DEPLOY.md)
+
+### Other Platforms
+
+- **Heroku**: Use the included `Procfile`
+- **Render**: May have Python version issues (not recommended)
 
 ## Local Development
 

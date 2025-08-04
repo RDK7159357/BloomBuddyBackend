@@ -1,7 +1,0 @@
-# Render service configuration
-# Build Command: pip install --only-binary=all -r requirements.txt
-# Start Command: python ml-api-server.py
-
-# Environment Variables needed:
-# ANTHROPIC_API_KEY = your_key_here
-# PORT = (set automatically by Render)

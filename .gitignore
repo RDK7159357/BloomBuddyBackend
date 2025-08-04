@@ -1,4 +1,5 @@
 .env
+.env.railway
 .DS_Store
 __pycache__/
 *.pyc
