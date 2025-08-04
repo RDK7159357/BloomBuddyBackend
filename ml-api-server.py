@@ -497,10 +497,10 @@ def get_models_info():
         }
     })
 
+# Load models on startup when module is imported
+load_models()
+
 if __name__ == '__main__':
-    # Load models on startup
-    load_models()
-    
     # Get configuration from environment variables
     port = int(os.getenv('PORT', 5000))
     debug = os.getenv('DEBUG', 'False').lower() == 'true'
