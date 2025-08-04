@@ -35,81 +35,123 @@ scalers = {
 }
 
 def load_models():
-    """Load your trained ML models and scalers"""
+    """Load your trained ML models and scalers with error handling"""
+    import warnings
+    # Suppress sklearn version warnings for production
+    warnings.filterwarnings("ignore", category=UserWarning, module="sklearn")
+    
     try:
         models_dir = os.getenv('MODELS_DIR', './models')
+        logger.info(f"Loading models from directory: {models_dir}")
         
         # Load diabetes model and scaler (from main models directory)
         diabetes_model_path = os.path.join(models_dir, 'diabetes_model.pkl')
         diabetes_scaler_path = os.path.join(models_dir, 'diabetes_scaler.pkl')
-        if os.path.exists(diabetes_model_path):
-            model_obj = joblib.load(diabetes_model_path)
-            if hasattr(model_obj, 'predict'):
-                models['diabetes'] = model_obj
-                logger.info("Diabetes model loaded successfully")
-            else:
-                logger.warning(f"Diabetes model file contains {type(model_obj)}, not a trained model")
-                models['diabetes'] = None
+        
+        try:
+            if os.path.exists(diabetes_model_path):
+                model_obj = joblib.load(diabetes_model_path)
+                if hasattr(model_obj, 'predict'):
+                    models['diabetes'] = model_obj
+                    logger.info("✅ Diabetes model loaded successfully")
+                else:
+                    logger.warning(f"❌ Diabetes model file contains {type(model_obj)}, not a trained model")
+                    models['diabetes'] = None
+        except Exception as e:
+            logger.error(f"❌ Failed to load diabetes model: {str(e)}")
+            models['diabetes'] = None
             
+        try:
             if os.path.exists(diabetes_scaler_path):
                 scaler_obj = joblib.load(diabetes_scaler_path)
                 if hasattr(scaler_obj, 'transform'):
                     scalers['diabetes'] = scaler_obj
-                    logger.info("Diabetes scaler loaded successfully")
+                    logger.info("✅ Diabetes scaler loaded successfully")
                 else:
-                    logger.warning(f"Diabetes scaler file contains {type(scaler_obj)}, not a scaler object")
+                    logger.warning(f"❌ Diabetes scaler file contains {type(scaler_obj)}, not a scaler object")
                     scalers['diabetes'] = None
             else:
-                logger.warning("Diabetes scaler not found")
+                logger.warning("⚠️ Diabetes scaler not found")
+        except Exception as e:
+            logger.error(f"❌ Failed to load diabetes scaler: {str(e)}")
+            scalers['diabetes'] = None
         
         # Load heart disease model and scaler (from main models directory)
         heart_model_path = os.path.join(models_dir, 'heart_disease_model.pkl')
         heart_scaler_path = os.path.join(models_dir, 'heart_scaler.pkl')
-        if os.path.exists(heart_model_path):
-            model_obj = joblib.load(heart_model_path)
-            if hasattr(model_obj, 'predict'):
-                models['heart'] = model_obj
-                logger.info("Heart disease model loaded successfully")
-            else:
-                logger.warning(f"Heart model file contains {type(model_obj)}, not a trained model")
-                models['heart'] = None
+        
+        try:
+            if os.path.exists(heart_model_path):
+                model_obj = joblib.load(heart_model_path)
+                if hasattr(model_obj, 'predict'):
+                    models['heart'] = model_obj
+                    logger.info("✅ Heart disease model loaded successfully")
+                else:
+                    logger.warning(f"❌ Heart model file contains {type(model_obj)}, not a trained model")
+                    models['heart'] = None
+        except Exception as e:
+            logger.error(f"❌ Failed to load heart disease model: {str(e)}")
+            models['heart'] = None
             
+        try:
             if os.path.exists(heart_scaler_path):
                 scaler_obj = joblib.load(heart_scaler_path)
                 if hasattr(scaler_obj, 'transform'):
                     scalers['heart'] = scaler_obj
-                    logger.info("Heart disease scaler loaded successfully")
+                    logger.info("✅ Heart disease scaler loaded successfully")
                 else:
-                    logger.warning(f"Heart scaler file contains {type(scaler_obj)} (feature names), not a scaler object")
+                    logger.warning(f"❌ Heart scaler file contains {type(scaler_obj)} (feature names), not a scaler object")
                     scalers['heart'] = None
             else:
-                logger.warning("Heart disease scaler not found")
+                logger.warning("⚠️ Heart disease scaler not found")
+        except Exception as e:
+            logger.error(f"❌ Failed to load heart disease scaler: {str(e)}")
+            scalers['heart'] = None
         
         # Load hypertension model and scaler (from main models directory)
         hypertension_model_path = os.path.join(models_dir, 'hypertension_model.pkl')
         hypertension_scaler_path = os.path.join(models_dir, 'hyper_scaler.pkl')
-        if os.path.exists(hypertension_model_path):
-            model_obj = joblib.load(hypertension_model_path)
-            if hasattr(model_obj, 'predict'):
-                models['hypertension'] = model_obj
-                logger.info("Hypertension model loaded successfully")
-            else:
-                logger.warning(f"Hypertension model file contains {type(model_obj)}, not a trained model")
-                models['hypertension'] = None
+        
+        try:
+            if os.path.exists(hypertension_model_path):
+                model_obj = joblib.load(hypertension_model_path)
+                if hasattr(model_obj, 'predict'):
+                    models['hypertension'] = model_obj
+                    logger.info("✅ Hypertension model loaded successfully")
+                else:
+                    logger.warning(f"❌ Hypertension model file contains {type(model_obj)}, not a trained model")
+                    models['hypertension'] = None
+        except Exception as e:
+            logger.error(f"❌ Failed to load hypertension model: {str(e)}")
+            models['hypertension'] = None
             
+        try:
             if os.path.exists(hypertension_scaler_path):
                 scaler_obj = joblib.load(hypertension_scaler_path)
                 if hasattr(scaler_obj, 'transform'):
                     scalers['hypertension'] = scaler_obj
-                    logger.info("Hypertension scaler loaded successfully")
+                    logger.info("✅ Hypertension scaler loaded successfully")
                 else:
-                    logger.warning(f"Hypertension scaler file contains {type(scaler_obj)}, not a scaler object")
+                    logger.warning(f"❌ Hypertension scaler file contains {type(scaler_obj)}, not a scaler object")
                     scalers['hypertension'] = None
             else:
-                logger.warning("Hypertension scaler not found")
+                logger.warning("⚠️ Hypertension scaler not found")
+        except Exception as e:
+            logger.error(f"❌ Failed to load hypertension scaler: {str(e)}")
+            scalers['hypertension'] = None
+            
+        # Log final status
+        loaded_models = sum(1 for model in models.values() if model is not None)
+        loaded_scalers = sum(1 for scaler in scalers.values() if scaler is not None)
+        logger.info(f"🚀 Model loading complete: {loaded_models}/3 models, {loaded_scalers}/3 scalers loaded")
             
     except Exception as e:
-        logger.error(f"Error loading models: {str(e)}")
+        logger.error(f"❌ Critical error loading models: {str(e)}")
+        # Set all models to None on critical failure
+        for key in models.keys():
+            models[key] = None
+        for key in scalers.keys():
+            scalers[key] = None
 
 def preprocess_features(features: List[float], model_type: str) -> np.ndarray:
     """Preprocess features based on model requirements"""
