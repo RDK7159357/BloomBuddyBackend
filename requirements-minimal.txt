@@ -1,0 +1,8 @@
+Flask
+Flask-CORS
+numpy
+scikit-learn
+joblib
+python-dotenv
+requests
+gunicorn
